@@ -21,13 +21,18 @@ struct ContentView: View {
     @State private var isDarkMode: Bool = false
     
     var body: some View {
-        VStack {
-            header
-            
-            Spacer()
-            
+        ZStack {
+            Color(isDarkMode ? Color("Black-1") : .white)
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                header
+                
+                Spacer()
+                
+            }
+            .padding()
         }
-        .padding()
+        
         .task {
             do {
                 word = try await getWord()
@@ -42,15 +47,16 @@ struct ContentView: View {
                 print("Error: Unexpected")
             }
         }
+        
     }
     
     var header: some View {
         HStack{
             Image(systemName: "book.closed")
                 .resizable()
-                   .frame(width: 28, height: 32)
-                   .aspectRatio(contentMode: .fit)
-                   .foregroundColor(Color("Gray-1"))
+                .frame(width: 28, height: 32)
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Color("Gray-1"))
             
             Spacer()
             
@@ -62,10 +68,10 @@ struct ContentView: View {
                     .resizable()
                     .frame(width: 19, height: 20)
                     .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color("Gray-1"))
+                    .foregroundColor(Color(isDarkMode ? Color("Purple-1") : Color("Gray-1")))
             }
             
-                
+            
         }
         
     }
