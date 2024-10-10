@@ -18,17 +18,21 @@ enum NetworkError: Error {
 struct ContentView: View {
     
     @State private var word: Word?
+    @State private var isDarkMode: Bool = false
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            
-            Text("Hello, world!")
-            
+        ZStack {
+            Color(isDarkMode ? Color("Black-1") : .white)
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                header
+                
+                Spacer()
+                
+            }
+            .padding()
         }
-        .padding()
+        
         .task {
             do {
                 word = try await getWord()
@@ -43,7 +47,36 @@ struct ContentView: View {
                 print("Error: Unexpected")
             }
         }
+        
     }
+    
+    var header: some View {
+        HStack{
+            Image(systemName: "book.closed")
+                .resizable()
+                .frame(width: 28, height: 32)
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Color("Gray-1"))
+            
+            Spacer()
+            
+            HStack(spacing:12){
+                Toggle(isOn: $isDarkMode){}
+                    .toggleStyle(SwitchToggleStyle(tint: Color("Purple-1")))
+                    .foregroundColor(.blue)
+                Image(systemName: "moon")
+                    .resizable()
+                    .frame(width: 19, height: 20)
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Color(isDarkMode ? Color("Purple-1") : Color("Gray-1")))
+            }
+            
+            
+        }
+        
+    }
+    
+    
     
     func getWord() async throws -> [WordModel] {
         let endpoint = "https://api.dictionaryapi.dev/api/v2/entries/en/hello"
