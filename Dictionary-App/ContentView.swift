@@ -134,7 +134,7 @@ struct ContentView: View {
             throw NetworkError.emptySearch
         }
         
-        let endpoint = "https://api.dictionaryapi.dev/api/v2/entries/en/hello"
+        let endpoint = "https://api.dictionaryapi.dev/api/v2/entries/en/\(wordSearched.lowercased())"
         
         guard let url = URL(string: endpoint) else {
             throw NetworkError.invalidURL
