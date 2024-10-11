@@ -39,37 +39,8 @@ struct ContentView: View {
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 header
-                HStack(alignment: .top) {
-                    Image(systemName: "magnifyingglass")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(Color("Purple-1"))
-                    TextField("", text: $wordSearched)
-                        .onSubmit {
-                            Task {
-                                await fetchWord()
-                            }
-                        }
-                }
-                .padding()
-                .overlay(
-                    
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(textFieldBorderColor, lineWidth: 1)
-                    
-                    
-                )
-                .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
-                .cornerRadius(16)
-                .padding(.top)
                 
-                if isEmpty {
-                    Text("Whoops, can’t be empty…")
-                        .foregroundStyle(Color("Orange-1"))
-                        .multilineTextAlignment(.leading)
-                        .padding([.horizontal],0)
-                }
-                
+                textField
                 Spacer()
                 
             }
@@ -103,13 +74,47 @@ struct ContentView: View {
         
     }
     
+    var textField: some View {
+        VStack {
+            HStack(alignment: .top) {
+                Image(systemName: "magnifyingglass")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(Color("Purple-1"))
+                TextField("", text: $wordSearched)
+                    .onSubmit {
+                        Task {
+                            await fetchWord()
+                        }
+                    }
+            }
+            .padding()
+            .overlay(
+                
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(textFieldBorderColor, lineWidth: 1)
+                
+                
+            )
+            .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
+            .cornerRadius(16)
+            .padding(.top)
+            if isEmpty {
+                Text("Whoops, can’t be empty…")
+                    .foregroundStyle(Color("Orange-1"))
+                    .multilineTextAlignment(.leading)
+                    .padding([.horizontal],0)
+            }
+        }
+    }
+    
     private func fetchWord() async {
         do {
             word = try await getWord()
             isEmpty = false
             print(word ?? "")
         } catch NetworkError.emptySearch {
-            isEmpty = true 
+            isEmpty = true
             print("Error: La búsqueda está vacía.")
         } catch NetworkError.invalidData {
             print("Error: Datos inválidos")
