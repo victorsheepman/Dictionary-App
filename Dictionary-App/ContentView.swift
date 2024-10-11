@@ -13,6 +13,8 @@ enum NetworkError: Error {
     case invalidResponse
     case decodingError(Error)
     case invalidData
+    case emptySearch
+    
 }
 
 struct ContentView: View {
@@ -20,6 +22,17 @@ struct ContentView: View {
     @State private var word: Word?
     @State private var isDarkMode: Bool = false
     @State private var wordSearched: String = ""
+    @State private var isEmpty: Bool = false
+    
+    
+    private var textFieldBorderColor: Color {
+        if isEmpty {
+            return Color("Orange-1")
+        } else {
+            return isDarkMode ? Color("Black-2") : Color("Gray-3")
+        }
+    }
+
     var body: some View {
         ZStack {
             Color(isDarkMode ? Color("Black-1") : .white)
@@ -27,47 +40,41 @@ struct ContentView: View {
             VStack {
                 header
                 HStack(alignment: .top) {
-                  Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(Color("Purple-1"))
-                  TextField("", text: $wordSearched)
-                    
-                       
+                    Image(systemName: "magnifyingglass")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Color("Purple-1"))
+                    TextField("", text: $wordSearched)
+                        .onSubmit {
+                            Task {
+                                await fetchWord()
+                            }
+                        }
                 }
                 .padding()
                 .overlay(
                     
-                  RoundedRectangle(cornerRadius: 16)
-                    .stroke(isDarkMode ? Color("Black-2") : Color("Gray-3"), lineWidth: 1)
-                  
-                  
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(textFieldBorderColor, lineWidth: 1)
+                    
+                    
                 )
                 .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
                 .cornerRadius(16)
                 .padding(.top)
-                    
+                
+                if isEmpty {
+                    Text("Whoops, can’t be empty…")
+                        .foregroundStyle(Color("Orange-1"))
+                        .multilineTextAlignment(.leading)
+                        .padding([.horizontal],0)
+                }
+                
                 Spacer()
                 
             }
             .padding()
         }
-        
-        .task {
-            do {
-                word = try await getWord()
-                print(word ?? "")
-            } catch NetworkError.invalidData {
-                print("Error: Invalid Data")
-            } catch NetworkError.invalidURL {
-                print("Error: La URL es inválida.")
-            } catch NetworkError.invalidResponse {
-                print("Error: La respuesta del servidor no es válida.")
-            } catch {
-                print("Error: Unexpected")
-            }
-        }
-        
     }
     
     var header: some View {
@@ -96,9 +103,32 @@ struct ContentView: View {
         
     }
     
+    private func fetchWord() async {
+        do {
+            word = try await getWord()
+            isEmpty = false
+            print(word ?? "")
+        } catch NetworkError.emptySearch {
+            isEmpty = true 
+            print("Error: La búsqueda está vacía.")
+        } catch NetworkError.invalidData {
+            print("Error: Datos inválidos")
+        } catch NetworkError.invalidURL {
+            print("Error: La URL es inválida.")
+        } catch NetworkError.invalidResponse {
+            print("Error: La respuesta del servidor no es válida.")
+        } catch {
+            print("Error: Inesperado")
+        }
+    }
     
     
-    func getWord() async throws -> [WordModel] {
+    private func getWord() async throws -> [WordModel] {
+        
+        guard !wordSearched.isEmpty else {
+            throw NetworkError.emptySearch
+        }
+        
         let endpoint = "https://api.dictionaryapi.dev/api/v2/entries/en/hello"
         
         guard let url = URL(string: endpoint) else {
@@ -120,6 +150,8 @@ struct ContentView: View {
             throw NetworkError.invalidData
         }
     }
+    
+    
 }
 
 #Preview {
