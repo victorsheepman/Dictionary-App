@@ -19,14 +19,34 @@ struct ContentView: View {
     
     @State private var word: Word?
     @State private var isDarkMode: Bool = false
-    
+    @State private var wordSearched: String = ""
     var body: some View {
         ZStack {
             Color(isDarkMode ? Color("Black-1") : .white)
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 header
-                
+                HStack(alignment: .top) {
+                  Image(systemName: "magnifyingglass")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(Color("Purple-1"))
+                  TextField("", text: $wordSearched)
+                    
+                       
+                }
+                .padding()
+                .overlay(
+                    
+                  RoundedRectangle(cornerRadius: 16)
+                    .stroke(isDarkMode ? Color("Black-2") : Color("Gray-3"), lineWidth: 1)
+                  
+                  
+                )
+                .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
+                .cornerRadius(16)
+                .padding(.top)
+                    
                 Spacer()
                 
             }
