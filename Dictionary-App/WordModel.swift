@@ -33,7 +33,7 @@ struct Phonetic: Codable {
     let text, audio: String?
 }
 
-typealias Word = [WordModel]
+typealias Word = WordModel
 
 
 class JSONCodingKey: CodingKey {

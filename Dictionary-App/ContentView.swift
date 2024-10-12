@@ -34,6 +34,15 @@ struct ContentView: View {
         }
     }
     
+    var audio: String? {
+        return word?.phonetics?.first { audio in
+            // Verifica que `audio` no sea nil y no esté vacío
+            guard let audioValue = audio.audio else { return false }
+            return !audioValue.isEmpty
+        }?.audio
+    }
+    
+    
     var body: some View {
         ZStack {
             Color(isDarkMode ? Color("Black-1") : .white)
@@ -42,29 +51,9 @@ struct ContentView: View {
                 header
                 
                 textField
-                HStack{
-                    VStack(alignment:.leading){
-                        Text("Keyboard")
-                            .font(.title)
-                            .bold()
-                        Text("/ˈkiːbɔːd/")
-                            .font(.subheadline)
-                            .foregroundStyle(Color("Purple-1"))
-                    }
-                    Spacer()
-                    Button(
-                        action: {
-                            playAudio()
-                        }) {
-                            Image(systemName: "play.fill")
-                                .font(.system(size: 24))
-                                .foregroundColor(Color("Purple-1"))
-                                .padding(20)
-                                .background(Color("Purple-1").opacity(0.25))
-                                .clipShape(Circle())
-                            
-                        }
-                }.padding(.top)
+            
+                mainWord
+                
                 Spacer()
                 
             }
@@ -132,11 +121,42 @@ struct ContentView: View {
         }
     }
     
+    var mainWord: some View {
+        HStack{
+            VStack(alignment:.leading){
+                Text(word?.word ?? "")
+                    .font(.title)
+                    .bold()
+                Text(word?.phonetic ?? "")
+                    .font(.subheadline)
+                    .foregroundStyle(Color("Purple-1"))
+            }
+            Spacer()
+            if let audio = audio {
+                Button(
+                    action: {
+                        
+                        playAudio(url: audio)
+                        
+                    }) {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(Color("Purple-1"))
+                            .padding(20)
+                            .background(Color("Purple-1").opacity(0.25))
+                            .clipShape(Circle())
+                        
+                    }
+            }
+            
+        }.padding(.top)
+    }
+    
     
     
     private func fetchWord() async {
         do {
-            word = try await getWord()
+            word = try await getWord().first
             isEmpty = false
             print(word ?? "")
         } catch NetworkError.emptySearch {
@@ -182,9 +202,9 @@ struct ContentView: View {
         }
     }
     
-    private func playAudio() {
+    private func playAudio(url: String) {
         
-        guard let audioPath = URL(string: "https://api.dictionaryapi.dev/media/pronunciations/en/keyboard-us.mp3") else {
+        guard let audioPath = URL(string: url) else {
             return
         }
         
