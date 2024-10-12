@@ -54,7 +54,7 @@ struct ContentView: View {
                     Spacer()
                     Button(
                         action: {
-                            playSong()
+                            playAudio()
                         }) {
                             Image(systemName: "play.fill")
                                 .font(.system(size: 24))
