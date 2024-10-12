@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 enum NetworkError: Error {
     case invalidURL
@@ -23,7 +24,7 @@ struct ContentView: View {
     @State private var isDarkMode: Bool = false
     @State private var wordSearched: String = ""
     @State private var isEmpty: Bool = false
-    
+    @State private var player: AVPlayer?
     
     private var textFieldBorderColor: Color {
         if isEmpty {
@@ -32,7 +33,15 @@ struct ContentView: View {
             return isDarkMode ? Color("Black-2") : Color("Gray-3")
         }
     }
-
+    
+    var audio: String? {
+        return word?.phonetics?.first { audio in
+            guard let audioValue = audio.audio else { return false }
+            return !audioValue.isEmpty
+        }?.audio
+    }
+    
+    
     var body: some View {
         ZStack {
             Color(isDarkMode ? Color("Black-1") : .white)
@@ -41,6 +50,9 @@ struct ContentView: View {
                 header
                 
                 textField
+            
+                mainWord
+                
                 Spacer()
                 
             }
@@ -108,9 +120,44 @@ struct ContentView: View {
         }
     }
     
+    var mainWord: some View {
+        HStack{
+            VStack(alignment:.leading){
+                Text(word?.word?.uppercased() ?? "")
+                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .font(.title)
+                    .bold()
+                Text(word?.phonetic ?? "")
+                    .font(.subheadline)
+                    .foregroundStyle(Color("Purple-1"))
+            }
+            Spacer()
+            if let audio = audio {
+                Button(
+                    action: {
+                        
+                        playAudio(url: audio)
+                        
+                    }) {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(Color("Purple-1"))
+                            .padding(20)
+                            .background(Color("Purple-1").opacity(0.25))
+                            .clipShape(Circle())
+                        
+                    }
+            }
+            
+        }.padding(.top)
+    }
+    
+    
+    
     private func fetchWord() async {
         do {
-            word = try await getWord()
+            word = try await getWord().first
             isEmpty = false
             print(word ?? "")
         } catch NetworkError.emptySearch {
@@ -155,6 +202,18 @@ struct ContentView: View {
             throw NetworkError.invalidData
         }
     }
+    
+    private func playAudio(url: String) {
+        
+        guard let audioPath = URL(string: url) else {
+            return
+        }
+        
+        player = AVPlayer(url: audioPath)
+        
+        player?.play()
+    }
+    
     
     
 }
