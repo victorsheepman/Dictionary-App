@@ -32,7 +32,7 @@ struct ContentView: View {
             return isDarkMode ? Color("Black-2") : Color("Gray-3")
         }
     }
-
+    
     var body: some View {
         ZStack {
             Color(isDarkMode ? Color("Black-1") : .white)
@@ -41,6 +41,29 @@ struct ContentView: View {
                 header
                 
                 textField
+                HStack{
+                    VStack(alignment:.leading){
+                        Text("Keyboard")
+                            .font(.title)
+                            .bold()
+                        Text("/ˈkiːbɔːd/")
+                            .font(.subheadline)
+                            .foregroundStyle(Color("Purple-1"))
+                    }
+                    Spacer()
+                    Button(
+                        action: {
+                            print("Botón presionado")
+                        }) {
+                            Image(systemName: "play.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(Color("Purple-1"))
+                                .padding(20)
+                                .background(Color("Purple-1").opacity(0.25))
+                                .clipShape(Circle())
+                            
+                        }
+                }.padding(.top)
                 Spacer()
                 
             }
