@@ -36,7 +36,6 @@ struct ContentView: View {
     
     var audio: String? {
         return word?.phonetics?.first { audio in
-            // Verifica que `audio` no sea nil y no esté vacío
             guard let audioValue = audio.audio else { return false }
             return !audioValue.isEmpty
         }?.audio
@@ -124,7 +123,9 @@ struct ContentView: View {
     var mainWord: some View {
         HStack{
             VStack(alignment:.leading){
-                Text(word?.word ?? "")
+                Text(word?.word?.uppercased() ?? "")
+                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .font(.title)
                     .bold()
                 Text(word?.phonetic ?? "")
