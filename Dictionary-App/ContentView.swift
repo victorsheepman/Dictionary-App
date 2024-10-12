@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 enum NetworkError: Error {
     case invalidURL
@@ -23,7 +24,7 @@ struct ContentView: View {
     @State private var isDarkMode: Bool = false
     @State private var wordSearched: String = ""
     @State private var isEmpty: Bool = false
-    
+    @State private var player: AVPlayer?
     
     private var textFieldBorderColor: Color {
         if isEmpty {
@@ -53,7 +54,7 @@ struct ContentView: View {
                     Spacer()
                     Button(
                         action: {
-                            print("Botón presionado")
+                            playSong()
                         }) {
                             Image(systemName: "play.fill")
                                 .font(.system(size: 24))
@@ -131,6 +132,8 @@ struct ContentView: View {
         }
     }
     
+    
+    
     private func fetchWord() async {
         do {
             word = try await getWord()
@@ -178,6 +181,18 @@ struct ContentView: View {
             throw NetworkError.invalidData
         }
     }
+    
+    private func playAudio() {
+        
+        guard let audioPath = URL(string: "https://api.dictionaryapi.dev/media/pronunciations/en/keyboard-us.mp3") else {
+            return
+        }
+        
+        player = AVPlayer(url: audioPath)
+        
+        player?.play()
+    }
+    
     
     
 }
