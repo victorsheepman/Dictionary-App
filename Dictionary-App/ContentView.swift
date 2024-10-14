@@ -18,6 +18,22 @@ enum NetworkError: Error {
     
 }
 
+private struct NamedFont: Identifiable {
+    let name: String
+    let font: Font
+    var id: String { name }
+}
+
+
+private let namedFonts: [NamedFont] = [
+    NamedFont(name: "Large Title", font: .largeTitle),
+    NamedFont(name: "Title", font: .title),
+    NamedFont(name: "Headline", font: .headline),
+    NamedFont(name: "Body", font: .body),
+    NamedFont(name: "Caption", font: .caption)
+]
+
+
 struct ContentView: View {
     
     @State private var word: Word?
@@ -41,6 +57,11 @@ struct ContentView: View {
         }?.audio
     }
     
+    var definitions: [Definition]? {
+        return word?.meanings?.first?.definitions
+    }
+
+    
     
     var body: some View {
         ZStack {
@@ -52,6 +73,9 @@ struct ContentView: View {
                 textField
             
                 mainWord
+                if let word = word {
+                    noun
+                }
                 
                 Spacer()
                 
@@ -154,6 +178,54 @@ struct ContentView: View {
     }
     
     
+    var noun: some View {
+        VStack(alignment:.leading) {
+            HStack{
+               Text("noun")
+                    .bold()
+                    .font(.footnote)
+                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                VStack{
+                    Divider()
+                }
+            }
+            
+            Text("Meaning")
+                .font(.title3)
+                .padding(.vertical)
+                .foregroundColor(Color("Gray-1"))
+                
+            ForEach(definitions ?? [], id: \.definition) { definition in
+                if let def = definition.definition {
+                    Label {
+                        Text(def)
+                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                    } icon: {
+                        Image(systemName:"circle.fill")
+                            .resizable()
+                            .frame(width: 5, height: 5)
+                            .foregroundColor(Color("Purple-1"))
+                    }
+                }
+            }
+            if let synonym = word?.meanings?.first?.synonyms?.first {
+                HStack{
+                    Text("Synonyms")
+                        .font(.subheadline)
+                        .padding(.vertical)
+                        .foregroundColor(Color("Gray-1"))
+                    
+                    Text(synonym)
+                        .font(.subheadline)
+                        .bold()
+                        .foregroundStyle(Color("Purple-1"))
+                    
+                }
+
+            }
+        }
+    }
+    
     
     private func fetchWord() async {
         do {
@@ -177,6 +249,7 @@ struct ContentView: View {
     
     private func getWord() async throws -> [WordModel] {
         
+     
         guard !wordSearched.isEmpty else {
             throw NetworkError.emptySearch
         }
