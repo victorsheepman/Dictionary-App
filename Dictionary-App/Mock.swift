@@ -36,7 +36,7 @@ let mockWordData = WordModel(
                     antonyms: []
                 ),
                 Definition(
-                    definition: "A component of many instruments including the piano, organ, and harpsichord consisting of usually black and white keys that cause different tones to be produced when struck.",
+                    definition: "A component of many instruments including the piano, organ, and harpsichord consisting of usually black and white keys that cause different tones to be produced when struck",
                     example: nil,
                     synonyms: [],
                     antonyms: []
@@ -47,7 +47,9 @@ let mockWordData = WordModel(
                     synonyms: [],
                     antonyms: []
                 )
-            ]
+                
+            ],
+            synonyms: nil
         ),
         Meaning(
             partOfSpeech: "verb",
@@ -58,7 +60,8 @@ let mockWordData = WordModel(
                     synonyms: [],
                     antonyms: []
                 )
-            ]
+            ],
+            synonyms: nil
         )
     ]
 )

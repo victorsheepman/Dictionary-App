@@ -57,8 +57,8 @@ struct ContentView: View {
         }?.audio
     }
     
-    var meanings: [Definition]? {
-        return mockWordData.meanings?.first?.definitions
+    var definitions: [Definition]? {
+        return word?.meanings?.first?.definitions
     }
 
     
@@ -73,42 +73,14 @@ struct ContentView: View {
                 textField
             
                 mainWord
-                
-                VStack(alignment:.leading) {
-                    HStack{
-                       Text("noun")
-                            .bold()
-                            .font(.footnote)
-                        VStack{
-                            Divider()
-                        }
-                    }
-                    
-                    Text("Meaning")
-                        .font(.title3)
-                        .padding(.vertical)
-                        .foregroundColor(Color("Gray-1"))
-                        
-                    ForEach(namedFonts) { namedFont in
-                        Label {
-                            Text(namedFont.name)
-                        } icon: {
-                            Image(systemName:"circle.fill")
-                                .resizable()
-                                .frame(width: 5, height: 5)
-                                .foregroundColor(Color("Purple-1"))
-                        }
-                    }
+                if let word = word {
+                    noun
                 }
-               
-                    
+                
                 Spacer()
                 
             }
             .padding()
-        }
-        .onAppear{
-            print(meanings)
         }
     }
     
@@ -205,6 +177,54 @@ struct ContentView: View {
         }.padding(.top)
     }
     
+    
+    var noun: some View {
+        VStack(alignment:.leading) {
+            HStack{
+               Text("noun")
+                    .bold()
+                    .font(.footnote)
+                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                VStack{
+                    Divider()
+                }
+            }
+            
+            Text("Meaning")
+                .font(.title3)
+                .padding(.vertical)
+                .foregroundColor(Color("Gray-1"))
+                
+            ForEach(definitions ?? [], id: \.definition) { definition in
+                if let def = definition.definition {
+                    Label {
+                        Text(def)
+                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                    } icon: {
+                        Image(systemName:"circle.fill")
+                            .resizable()
+                            .frame(width: 5, height: 5)
+                            .foregroundColor(Color("Purple-1"))
+                    }
+                }
+            }
+            if let synonym = word?.meanings?.first?.synonyms?.first {
+                HStack{
+                    Text("Synonyms")
+                        .font(.subheadline)
+                        .padding(.vertical)
+                        .foregroundColor(Color("Gray-1"))
+                    
+                    Text(synonym)
+                        .font(.subheadline)
+                        .bold()
+                        .foregroundStyle(Color("Purple-1"))
+                    
+                }
+
+            }
+        }
+    }
     
     
     private func fetchWord() async {

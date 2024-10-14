@@ -20,6 +20,7 @@ struct WordModel: Codable {
 struct Meaning: Codable {
     let partOfSpeech: String?
     let definitions: [Definition]?
+    let synonyms: [String]?
 }
 
 // MARK: - Definition
