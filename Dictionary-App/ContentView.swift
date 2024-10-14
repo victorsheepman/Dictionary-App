@@ -18,6 +18,22 @@ enum NetworkError: Error {
     
 }
 
+private struct NamedFont: Identifiable {
+    let name: String
+    let font: Font
+    var id: String { name }
+}
+
+
+private let namedFonts: [NamedFont] = [
+    NamedFont(name: "Large Title", font: .largeTitle),
+    NamedFont(name: "Title", font: .title),
+    NamedFont(name: "Headline", font: .headline),
+    NamedFont(name: "Body", font: .body),
+    NamedFont(name: "Caption", font: .caption)
+]
+
+
 struct ContentView: View {
     
     @State private var word: Word?
@@ -41,6 +57,11 @@ struct ContentView: View {
         }?.audio
     }
     
+    var meanings: [Definition]? {
+        return mockWordData.meanings?.first?.definitions
+    }
+
+    
     
     var body: some View {
         ZStack {
@@ -53,10 +74,41 @@ struct ContentView: View {
             
                 mainWord
                 
+                VStack(alignment:.leading) {
+                    HStack{
+                       Text("noun")
+                            .bold()
+                            .font(.footnote)
+                        VStack{
+                            Divider()
+                        }
+                    }
+                    
+                    Text("Meaning")
+                        .font(.title3)
+                        .padding(.vertical)
+                        .foregroundColor(Color("Gray-1"))
+                        
+                    ForEach(namedFonts) { namedFont in
+                        Label {
+                            Text(namedFont.name)
+                        } icon: {
+                            Image(systemName:"circle.fill")
+                                .resizable()
+                                .frame(width: 5, height: 5)
+                                .foregroundColor(Color("Purple-1"))
+                        }
+                    }
+                }
+               
+                    
                 Spacer()
                 
             }
             .padding()
+        }
+        .onAppear{
+            print(meanings)
         }
     }
     
@@ -177,6 +229,7 @@ struct ContentView: View {
     
     private func getWord() async throws -> [WordModel] {
         
+     
         guard !wordSearched.isEmpty else {
             throw NetworkError.emptySearch
         }
