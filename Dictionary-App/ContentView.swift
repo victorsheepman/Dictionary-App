@@ -231,9 +231,10 @@ struct ContentView: View {
         do {
             word = try await getWord().first
             isEmpty = false
-            print(word ?? "")
+            
         } catch NetworkError.emptySearch {
             isEmpty = true
+            word = nil
             print("Error: La búsqueda está vacía.")
         } catch NetworkError.invalidData {
             print("Error: Datos inválidos")
