@@ -60,6 +60,10 @@ struct ContentView: View {
     var definitions: [Definition]? {
         return word?.meanings?.first?.definitions
     }
+    
+    var verbs: [Definition]? {
+        return mockWordData.meanings?.first(where: {$0.partOfSpeech == "verb" })?.definitions
+    }
 
     
     
@@ -77,10 +81,45 @@ struct ContentView: View {
                     noun
                 }
                 
+                VStack(alignment:.leading) {
+                    HStack{
+                       Text("verb")
+                            .bold()
+                            .font(.footnote)
+                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                        VStack{
+                            Divider()
+                        }
+                    }
+                    
+                    Text("Meaning")
+                        .font(.title3)
+                        .padding(.vertical)
+                        .foregroundColor(Color("Gray-1"))
+                        
+                    ForEach(definitions ?? [], id: \.definition) { definition in
+                        if let def = definition.definition {
+                            Label {
+                                Text(def)
+                                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                            } icon: {
+                                Image(systemName:"circle.fill")
+                                    .resizable()
+                                    .frame(width: 5, height: 5)
+                                    .foregroundColor(Color("Purple-1"))
+                            }
+                        }
+                    }
+                   
+                }
+
+                
                 Spacer()
                 
             }
             .padding()
+        }.onAppear{
+            print(verbs)
         }
     }
     
