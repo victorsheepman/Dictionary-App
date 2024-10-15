@@ -18,20 +18,11 @@ enum NetworkError: Error {
     
 }
 
-private struct NamedFont: Identifiable {
-    let name: String
-    let font: Font
-    var id: String { name }
+enum PartOfSpeech: String {
+    case noun = "noun"
+    case verb = "verb"
+    
 }
-
-
-private let namedFonts: [NamedFont] = [
-    NamedFont(name: "Large Title", font: .largeTitle),
-    NamedFont(name: "Title", font: .title),
-    NamedFont(name: "Headline", font: .headline),
-    NamedFont(name: "Body", font: .body),
-    NamedFont(name: "Caption", font: .caption)
-]
 
 
 struct ContentView: View {
@@ -58,11 +49,19 @@ struct ContentView: View {
     }
     
     var nouns: [Definition]? {
-        return word?.meanings?.first(where: {$0.partOfSpeech == "noun" })?.definitions
+        return word?.meanings?.first(where: {$0.partOfSpeech == PartOfSpeech.noun.rawValue })?.definitions?.prefix(3).map { $0 }
     }
     
     var verbs: [Definition]? {
-        return mockWordData.meanings?.first(where: {$0.partOfSpeech == "verb" })?.definitions
+        return word?.meanings?.first(where: {$0.partOfSpeech == PartOfSpeech.verb.rawValue })?.definitions?.prefix(3).map { $0 }
+    }
+    
+    var isNoun:Bool {
+        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })) ?? false)
+    }
+    
+    var isVerb:Bool {
+        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })) ?? false)
     }
 
     
@@ -77,8 +76,11 @@ struct ContentView: View {
                 textField
             
                 mainWord
-                if let word = word {
+                if isNoun {
                     noun
+                }
+    
+                if isVerb {
                     verb
                 }
     
