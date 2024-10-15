@@ -18,20 +18,11 @@ enum NetworkError: Error {
     
 }
 
-private struct NamedFont: Identifiable {
-    let name: String
-    let font: Font
-    var id: String { name }
+enum PartOfSpeech: String {
+    case noun = "noun"
+    case verb = "verb"
+    
 }
-
-
-private let namedFonts: [NamedFont] = [
-    NamedFont(name: "Large Title", font: .largeTitle),
-    NamedFont(name: "Title", font: .title),
-    NamedFont(name: "Headline", font: .headline),
-    NamedFont(name: "Body", font: .body),
-    NamedFont(name: "Caption", font: .caption)
-]
 
 
 struct ContentView: View {
@@ -57,8 +48,20 @@ struct ContentView: View {
         }?.audio
     }
     
-    var definitions: [Definition]? {
-        return word?.meanings?.first?.definitions
+    var nouns: [Definition]? {
+        return word?.meanings?.first(where: {$0.partOfSpeech == PartOfSpeech.noun.rawValue })?.definitions?.prefix(3).map { $0 }
+    }
+    
+    var verbs: [Definition]? {
+        return word?.meanings?.first(where: {$0.partOfSpeech == PartOfSpeech.verb.rawValue })?.definitions?.prefix(3).map { $0 }
+    }
+    
+    var isNoun:Bool {
+        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })) ?? false)
+    }
+    
+    var isVerb:Bool {
+        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })) ?? false)
     }
 
     
@@ -73,9 +76,15 @@ struct ContentView: View {
                 textField
             
                 mainWord
-                if let word = word {
+                if isNoun {
                     noun
                 }
+    
+                if isVerb {
+                    verb
+                }
+    
+
                 
                 Spacer()
                 
@@ -195,7 +204,7 @@ struct ContentView: View {
                 .padding(.vertical)
                 .foregroundColor(Color("Gray-1"))
                 
-            ForEach(definitions ?? [], id: \.definition) { definition in
+            ForEach(nouns ?? [], id: \.definition) { definition in
                 if let def = definition.definition {
                     Label {
                         Text(def)
@@ -223,6 +232,48 @@ struct ContentView: View {
                 }
 
             }
+        }
+    }
+    
+    var verb: some View {
+        VStack(alignment:.leading) {
+            HStack{
+               Text("verb")
+                    .bold()
+                    .font(.footnote)
+                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                VStack{
+                    Divider()
+                       
+                }
+            }
+            
+            Text("Meaning")
+                .font(.title3)
+                .padding(.vertical)
+                .foregroundColor(Color("Gray-1"))
+                
+            ForEach(verbs ?? [], id: \.definition) { definition in
+                if let def = definition.definition {
+                    Label {
+                        Text(def)
+                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                    } icon: {
+                        Image(systemName:"circle.fill")
+                            .resizable()
+                            .frame(width: 5, height: 5)
+                            .foregroundColor(Color("Purple-1"))
+                    }
+                }
+                
+                if let example = definition.example {
+                    Text(example)
+                        .foregroundStyle(Color("Gray-1"))
+                        .padding([.top, .horizontal])
+                }
+                
+            }
+           
         }
     }
     
