@@ -57,8 +57,8 @@ struct ContentView: View {
         }?.audio
     }
     
-    var definitions: [Definition]? {
-        return word?.meanings?.first?.definitions
+    var nouns: [Definition]? {
+        return word?.meanings?.first(where: {$0.partOfSpeech == "noun" })?.definitions
     }
     
     var verbs: [Definition]? {
@@ -79,47 +79,15 @@ struct ContentView: View {
                 mainWord
                 if let word = word {
                     noun
+                    verb
                 }
-                
-                VStack(alignment:.leading) {
-                    HStack{
-                       Text("verb")
-                            .bold()
-                            .font(.footnote)
-                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                        VStack{
-                            Divider()
-                        }
-                    }
-                    
-                    Text("Meaning")
-                        .font(.title3)
-                        .padding(.vertical)
-                        .foregroundColor(Color("Gray-1"))
-                        
-                    ForEach(definitions ?? [], id: \.definition) { definition in
-                        if let def = definition.definition {
-                            Label {
-                                Text(def)
-                                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                            } icon: {
-                                Image(systemName:"circle.fill")
-                                    .resizable()
-                                    .frame(width: 5, height: 5)
-                                    .foregroundColor(Color("Purple-1"))
-                            }
-                        }
-                    }
-                   
-                }
+    
 
                 
                 Spacer()
                 
             }
             .padding()
-        }.onAppear{
-            print(verbs)
         }
     }
     
@@ -234,7 +202,7 @@ struct ContentView: View {
                 .padding(.vertical)
                 .foregroundColor(Color("Gray-1"))
                 
-            ForEach(definitions ?? [], id: \.definition) { definition in
+            ForEach(nouns ?? [], id: \.definition) { definition in
                 if let def = definition.definition {
                     Label {
                         Text(def)
@@ -262,6 +230,48 @@ struct ContentView: View {
                 }
 
             }
+        }
+    }
+    
+    var verb: some View {
+        VStack(alignment:.leading) {
+            HStack{
+               Text("verb")
+                    .bold()
+                    .font(.footnote)
+                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                VStack{
+                    Divider()
+                       
+                }
+            }
+            
+            Text("Meaning")
+                .font(.title3)
+                .padding(.vertical)
+                .foregroundColor(Color("Gray-1"))
+                
+            ForEach(verbs ?? [], id: \.definition) { definition in
+                if let def = definition.definition {
+                    Label {
+                        Text(def)
+                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                    } icon: {
+                        Image(systemName:"circle.fill")
+                            .resizable()
+                            .frame(width: 5, height: 5)
+                            .foregroundColor(Color("Purple-1"))
+                    }
+                }
+                
+                if let example = definition.example {
+                    Text(example)
+                        .foregroundStyle(Color("Gray-1"))
+                        .padding([.top, .horizontal])
+                }
+                
+            }
+           
         }
     }
     
