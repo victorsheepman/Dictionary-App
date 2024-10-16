@@ -63,5 +63,7 @@ let mockWordData = WordModel(
             ],
             synonyms: nil
         )
-    ]
+    ], sourceUrls: [
+        "https://en.wiktionary.org/wiki/keyboard"
+        ]
 )
