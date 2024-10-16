@@ -49,18 +49,18 @@ struct ContentView: View {
     }
     
     var nouns: [Definition]? {
-        return word?.meanings?.first(where: {$0.partOfSpeech == PartOfSpeech.noun.rawValue })?.definitions?.prefix(3).map { $0 }
+        return word?.meanings?.first(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })?.definitions?.prefix(3).map { $0 }
     }
     
     var verbs: [Definition]? {
-        return word?.meanings?.first(where: {$0.partOfSpeech == PartOfSpeech.verb.rawValue })?.definitions?.prefix(3).map { $0 }
+        return word?.meanings?.first(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })?.definitions?.prefix(3).map { $0 }
     }
     
-    var isNoun:Bool {
+    var isNoun: Bool {
         return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })) ?? false)
     }
     
-    var isVerb:Bool {
+    var isVerb: Bool {
         return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })) ?? false)
     }
 
@@ -76,6 +76,7 @@ struct ContentView: View {
                 textField
             
                 mainWord
+                
                 if isNoun {
                     noun
                 }
@@ -83,11 +84,22 @@ struct ContentView: View {
                 if isVerb {
                     verb
                 }
-    
-
+          
                 
+                if let url = word?.sourceUrls?.first {
+                    
+                    Divider()
+                    
+                    VStack(alignment: .leading) {
+                        Text("Source")
+                            .font(.title3)
+                            .foregroundColor(Color("Gray-1"))
+                            .underline()
+                        Link(url, destination: URL(string: url)!)
+                    }
+                }
+               
                 Spacer()
-                
             }
             .padding()
         }

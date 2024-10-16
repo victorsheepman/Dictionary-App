@@ -14,6 +14,7 @@ struct WordModel: Codable {
     let phonetics: [Phonetic]?
     let origin: String?
     let meanings: [Meaning]?
+    let sourceUrls: [String]?
 }
 
 // MARK: - Meaning
