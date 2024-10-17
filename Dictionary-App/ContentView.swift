@@ -32,7 +32,8 @@ struct ContentView: View {
     @State private var wordSearched: String = ""
     @State private var isEmpty: Bool = false
     @State private var player: AVPlayer?
-    
+    @State private var isNoFound: Bool = false
+   
     private var textFieldBorderColor: Color {
         if isEmpty {
             return Color("Orange-1")
@@ -97,6 +98,27 @@ struct ContentView: View {
                             .underline()
                         Link(url, destination: URL(string: url)!)
                     }
+                }
+                
+                VStack{
+                    Image(systemName: Constansts.NoData.icon)
+                        .resizable()
+                        .frame(width: 64, height: 64)
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color(isDarkMode ? Color("Purple-1") : Color("Gray-1")))
+                    Text(Constansts.NoData.title)
+                        .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .font(.system(size: 20))
+                        .padding(.top)
+                    
+                    Text(Constansts.NoData.body)
+                        .font(.subheadline)
+                        .foregroundColor(Color(isDarkMode ? Color("Purple-1") : Color("Gray-1")))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top)
+                        
                 }
                
                 Spacer()
@@ -294,6 +316,7 @@ struct ContentView: View {
         do {
             word = try await getWord().first
             isEmpty = false
+            isNoFound = false
             
         } catch NetworkError.emptySearch {
             isEmpty = true
@@ -305,6 +328,7 @@ struct ContentView: View {
             print("Error: La URL es inválida.")
         } catch NetworkError.invalidResponse {
             print("Error: La respuesta del servidor no es válida.")
+            isNoFound = true
         } catch {
             print("Error: Inesperado")
         }
