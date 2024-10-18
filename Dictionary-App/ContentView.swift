@@ -8,24 +8,9 @@
 import SwiftUI
 import AVKit
 
-enum NetworkError: Error {
-    case invalidURL
-    case requestFailed(Error)
-    case invalidResponse
-    case decodingError(Error)
-    case invalidData
-    case emptySearch
-    
-}
-
-enum PartOfSpeech: String {
-    case noun = "noun"
-    case verb = "verb"
-    
-}
-
 
 struct ContentView: View {
+    
     
     @State private var word: Word?
     @State private var isDarkMode: Bool = false
@@ -33,37 +18,19 @@ struct ContentView: View {
     @State private var isEmpty: Bool = false
     @State private var player: AVPlayer?
     @State private var isNoFound: Bool = false
+    
+    @StateObject private var viewModel = DictionaryModelView()
+    
+    
    
     private var textFieldBorderColor: Color {
         if isEmpty {
-            return Color("Orange-1")
+            return Color("Orange")
         } else {
             return isDarkMode ? Color("Black-2") : Color("Gray-3")
         }
     }
     
-    var audio: String? {
-        return word?.phonetics?.first { audio in
-            guard let audioValue = audio.audio else { return false }
-            return !audioValue.isEmpty
-        }?.audio
-    }
-    
-    var nouns: [Definition]? {
-        return word?.meanings?.first(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })?.definitions?.prefix(3).map { $0 }
-    }
-    
-    var verbs: [Definition]? {
-        return word?.meanings?.first(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })?.definitions?.prefix(3).map { $0 }
-    }
-    
-    var isNoun: Bool {
-        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })) ?? false)
-    }
-    
-    var isVerb: Bool {
-        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })) ?? false)
-    }
 
     
     
@@ -78,18 +45,18 @@ struct ContentView: View {
             
                 mainWord
                 
-                if isNoun {
+                if viewModel.isNoun {
                     noun
                 }
     
-                if isVerb {
+                if viewModel.isVerb {
                     verb
                 }
                 
-                if isNoFound {
+                if viewModel.isNoFound {
                     noData
                 }
-                if let url = word?.sourceUrls?.first {
+                if let url = viewModel.word?.sourceUrls?.first {
                     
                     Divider()
                     
@@ -121,13 +88,13 @@ struct ContentView: View {
             
             HStack(spacing:12){
                 Toggle(isOn: $isDarkMode){}
-                    .toggleStyle(SwitchToggleStyle(tint: Color("Purple-1")))
+                    .toggleStyle(SwitchToggleStyle(tint: Color("Purple")))
                     .foregroundColor(.blue)
                 Image(systemName: Constansts.Icons.moon)
                     .resizable()
                     .frame(width: 19, height: 20)
                     .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color(isDarkMode ? Color("Purple-1") : Color("Gray-1")))
+                    .foregroundColor(Color(isDarkMode ? Color("Purple") : Color("Gray-1")))
             }
             
             
@@ -141,12 +108,11 @@ struct ContentView: View {
                 Image(systemName: Constansts.Icons.search)
                     .resizable()
                     .frame(width: 20, height: 20)
-                    .foregroundColor(Color("Purple-1"))
-                TextField("", text: $wordSearched)
+                    .foregroundColor(Color("Purple"))
+                TextField("", text: $viewModel.wordSearched)
                     .onSubmit {
                         Task {
-                            word = nil
-                            await fetchWord()
+                            await viewModel.fetchWord()
                         }
                     }
             }
@@ -161,9 +127,9 @@ struct ContentView: View {
             .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
             .cornerRadius(16)
             .padding(.top)
-            if isEmpty {
+            if viewModel.isEmpty {
                 Text(Constansts.NoData.empty)
-                    .foregroundStyle(Color("Orange-1"))
+                    .foregroundStyle(Color("Orange"))
                     .multilineTextAlignment(.leading)
                     .padding([.horizontal],0)
             }
@@ -173,28 +139,28 @@ struct ContentView: View {
     var mainWord: some View {
         HStack{
             VStack(alignment:.leading){
-                Text(word?.word?.uppercased() ?? "")
+                Text(viewModel.word?.word?.uppercased() ?? "")
                     .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .font(.title)
                     .bold()
-                Text(word?.phonetic ?? "")
+                Text(viewModel.word?.phonetic ?? "")
                     .font(.subheadline)
-                    .foregroundStyle(Color("Purple-1"))
+                    .foregroundStyle(Color("Purple"))
             }
             Spacer()
-            if let audio = audio {
+            if let audio = viewModel.audio {
                 Button(
                     action: {
                         
-                        playAudio(url: audio)
+                        viewModel.playAudio(url: audio)
                         
                     }) {
                         Image(systemName: Constansts.Icons.play)
                             .font(.system(size: 24))
-                            .foregroundColor(Color("Purple-1"))
+                            .foregroundColor(Color("Purple"))
                             .padding(20)
-                            .background(Color("Purple-1").opacity(0.25))
+                            .background(Color("Purple").opacity(0.25))
                             .clipShape(Circle())
                         
                     }
@@ -221,7 +187,7 @@ struct ContentView: View {
                 .padding(.vertical)
                 .foregroundColor(Color("Gray-1"))
                 
-            ForEach(nouns ?? [], id: \.definition) { definition in
+            ForEach(viewModel.nouns ?? [], id: \.definition) { definition in
                 if let def = definition.definition {
                     Label {
                         Text(def)
@@ -230,11 +196,11 @@ struct ContentView: View {
                         Image(systemName:Constansts.Icons.circle)
                             .resizable()
                             .frame(width: 5, height: 5)
-                            .foregroundColor(Color("Purple-1"))
+                            .foregroundColor(Color("Purple"))
                     }
                 }
             }
-            if let synonym = word?.meanings?.first?.synonyms?.first {
+            if let synonym = viewModel.word?.meanings?.first?.synonyms?.first {
                 HStack{
                     Text(Constansts.sections.synonyms)
                         .font(.subheadline)
@@ -244,7 +210,7 @@ struct ContentView: View {
                     Text(synonym)
                         .font(.subheadline)
                         .bold()
-                        .foregroundStyle(Color("Purple-1"))
+                        .foregroundStyle(Color("Purple"))
                     
                 }
 
@@ -270,7 +236,7 @@ struct ContentView: View {
                 .padding(.vertical)
                 .foregroundColor(Color("Gray-1"))
                 
-            ForEach(verbs ?? [], id: \.definition) { definition in
+            ForEach(viewModel.verbs ?? [], id: \.definition) { definition in
                 if let def = definition.definition {
                     Label {
                         Text(def)
@@ -279,7 +245,7 @@ struct ContentView: View {
                         Image(systemName: Constansts.Icons.circle)
                             .resizable()
                             .frame(width: 5, height: 5)
-                            .foregroundColor(Color("Purple-1"))
+                            .foregroundColor(Color("Purple"))
                     }
                 }
                 
@@ -300,7 +266,7 @@ struct ContentView: View {
                 .resizable()
                 .frame(width: 64, height: 64)
                 .aspectRatio(contentMode: .fit)
-                .foregroundColor(Color(isDarkMode ? Color("Purple-1") : Color("Gray-1")))
+                .foregroundColor(Color(isDarkMode ? Color("Purple") : Color("Gray-1")))
             Text(Constansts.NoData.title)
                 .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -309,87 +275,13 @@ struct ContentView: View {
             
             Text(Constansts.NoData.body)
                 .font(.subheadline)
-                .foregroundColor(Color(isDarkMode ? Color("Purple-1") : Color("Gray-1")))
+                .foregroundColor(Color(isDarkMode ? Color("Purple") : Color("Gray-1")))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding(.top)
                 
         }
     }
-    
-    
-    private func fetchWord() async {
-        
-        do {
-            word = try await getWord().first
-            isEmpty = false
-            isNoFound = false
-            
-        } catch NetworkError.emptySearch {
-            isEmpty = true
-            word = nil
-            print(Constansts.Errors.emptySearch)
-        } catch NetworkError.invalidData {
-            
-            print(Constansts.Errors.invalidData)
-            
-        } catch NetworkError.invalidURL {
-            
-            print(Constansts.Errors.invalidURL)
-            
-        } catch NetworkError.invalidResponse {
-            
-            print(Constansts.Errors.invalidResponse)
-            isNoFound = true
-            
-        } catch {
-            print(Constansts.Errors.unexpected)
-        }
-    }
-    
-    
-    private func getWord() async throws -> [WordModel] {
-        
-     
-        guard !wordSearched.isEmpty else {
-            throw NetworkError.emptySearch
-        }
-        
-        let endpoint = Constansts.Url.base + wordSearched.lowercased()
-        
-        guard let url = URL(string: endpoint) else {
-            throw NetworkError.invalidURL
-        }
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw NetworkError.invalidResponse
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            
-            return try decoder.decode([WordModel].self, from: data)
-            
-        } catch {
-            throw NetworkError.invalidData
-        }
-    }
-    
-    private func playAudio(url: String) {
-        
-        guard let audioPath = URL(string: url) else {
-            return
-        }
-        
-        player = AVPlayer(url: audioPath)
-        
-        player?.play()
-    }
-    
-    
-    
 }
 
 #Preview {

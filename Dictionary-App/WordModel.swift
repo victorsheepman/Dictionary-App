@@ -7,6 +7,23 @@
 
 import Foundation
 
+
+enum NetworkError: Error {
+    case invalidURL
+    case requestFailed(Error)
+    case invalidResponse
+    case decodingError(Error)
+    case invalidData
+    case emptySearch
+    
+}
+
+enum PartOfSpeech: String {
+    case noun = "noun"
+    case verb = "verb"
+    
+}
+
 // MARK: - WordModel
 
 struct WordModel: Codable {
