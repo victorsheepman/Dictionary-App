@@ -10,30 +10,18 @@ import AVKit
 
 
 struct ContentView: View {
-    
-    
-    @State private var word: Word?
+
     @State private var isDarkMode: Bool = false
-    @State private var wordSearched: String = ""
-    @State private var isEmpty: Bool = false
-    @State private var player: AVPlayer?
-    @State private var isNoFound: Bool = false
-    
     @StateObject private var viewModel = DictionaryModelView()
     
-    
-   
     private var textFieldBorderColor: Color {
-        if isEmpty {
+        if viewModel.isEmpty {
             return Color("Orange")
         } else {
             return isDarkMode ? Color("Black-2") : Color("Gray-3")
         }
     }
-    
 
-    
-    
     var body: some View {
         ZStack {
             Color(isDarkMode ? Color("Black-1") : .white)
@@ -121,7 +109,6 @@ struct ContentView: View {
                 
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(textFieldBorderColor, lineWidth: 1)
-                
                 
             )
             .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
