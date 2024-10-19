@@ -16,6 +16,7 @@ La aplicación DictionaryApp está diseñada utilizando SwiftUI y AVKit para pro
 - Swift
 - SwiftUI
 - MVVM
+- XcTest
 - AVKit
 
 ## Imagenes
