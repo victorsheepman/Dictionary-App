@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8416D4492CBD686A00A96DD0 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8416D4482CBD686A00A96DD0 /* Mock.swift */; };
+		848BC7552CC4272200B3CC01 /* Dictionary_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BC7542CC4272200B3CC01 /* Dictionary_AppTests.swift */; };
+		848BC75C2CC427C200B3CC01 /* WordViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BC75B2CC427C200B3CC01 /* WordViewModelTests.swift */; };
 		8495C7FC2CC146C300521800 /* Constansts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8495C7FB2CC146C300521800 /* Constansts.swift */; };
 		84A2956F2CC2A702001FD4FC /* DictionaryModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2956E2CC2A702001FD4FC /* DictionaryModelView.swift */; };
 		84E8D4022CB6DA780034B375 /* Dictionary_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D4012CB6DA780034B375 /* Dictionary_AppApp.swift */; };
@@ -19,8 +21,21 @@
 		84E8D4142CB6E2970034B375 /* JSONAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D4132CB6E2970034B375 /* JSONAny.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		848BC7562CC4272200B3CC01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E8D3F62CB6DA780034B375 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84E8D3FD2CB6DA780034B375;
+			remoteInfo = "Dictionary-App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		8416D4482CBD686A00A96DD0 /* Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
+		848BC7522CC4272200B3CC01 /* Dictionary-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dictionary-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		848BC7542CC4272200B3CC01 /* Dictionary_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary_AppTests.swift; sourceTree = "<group>"; };
+		848BC75B2CC427C200B3CC01 /* WordViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViewModelTests.swift; sourceTree = "<group>"; };
 		8495C7FB2CC146C300521800 /* Constansts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constansts.swift; sourceTree = "<group>"; };
 		84A2956E2CC2A702001FD4FC /* DictionaryModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModelView.swift; sourceTree = "<group>"; };
 		84E8D3FE2CB6DA780034B375 /* Dictionary-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dictionary-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,6 +49,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		848BC74F2CC4272200B3CC01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E8D3FB2CB6DA780034B375 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -44,10 +66,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		848BC7532CC4272200B3CC01 /* Dictionary-AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				848BC7542CC4272200B3CC01 /* Dictionary_AppTests.swift */,
+				848BC75B2CC427C200B3CC01 /* WordViewModelTests.swift */,
+			);
+			path = "Dictionary-AppTests";
+			sourceTree = "<group>";
+		};
 		84E8D3F52CB6DA780034B375 = {
 			isa = PBXGroup;
 			children = (
 				84E8D4002CB6DA780034B375 /* Dictionary-App */,
+				848BC7532CC4272200B3CC01 /* Dictionary-AppTests */,
 				84E8D3FF2CB6DA780034B375 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				84E8D3FE2CB6DA780034B375 /* Dictionary-App.app */,
+				848BC7522CC4272200B3CC01 /* Dictionary-AppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +121,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		848BC7512CC4272200B3CC01 /* Dictionary-AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 848BC7582CC4272200B3CC01 /* Build configuration list for PBXNativeTarget "Dictionary-AppTests" */;
+			buildPhases = (
+				848BC74E2CC4272200B3CC01 /* Sources */,
+				848BC74F2CC4272200B3CC01 /* Frameworks */,
+				848BC7502CC4272200B3CC01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				848BC7572CC4272200B3CC01 /* PBXTargetDependency */,
+			);
+			name = "Dictionary-AppTests";
+			productName = "Dictionary-AppTests";
+			productReference = 848BC7522CC4272200B3CC01 /* Dictionary-AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		84E8D3FD2CB6DA780034B375 /* Dictionary-App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84E8D40C2CB6DA790034B375 /* Build configuration list for PBXNativeTarget "Dictionary-App" */;
@@ -115,6 +166,10 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					848BC7512CC4272200B3CC01 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 84E8D3FD2CB6DA780034B375;
+					};
 					84E8D3FD2CB6DA780034B375 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
@@ -134,11 +189,19 @@
 			projectRoot = "";
 			targets = (
 				84E8D3FD2CB6DA780034B375 /* Dictionary-App */,
+				848BC7512CC4272200B3CC01 /* Dictionary-AppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		848BC7502CC4272200B3CC01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E8D3FC2CB6DA780034B375 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -151,6 +214,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		848BC74E2CC4272200B3CC01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				848BC75C2CC427C200B3CC01 /* WordViewModelTests.swift in Sources */,
+				848BC7552CC4272200B3CC01 /* Dictionary_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E8D3FA2CB6DA780034B375 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -168,7 +240,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		848BC7572CC4272200B3CC01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84E8D3FD2CB6DA780034B375 /* Dictionary-App */;
+			targetProxy = 848BC7562CC4272200B3CC01 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		848BC7592CC4272200B3CC01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AB95K5R2N4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.victorsheepman.Dictionary-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dictionary-App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dictionary-App";
+			};
+			name = Debug;
+		};
+		848BC75A2CC4272200B3CC01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AB95K5R2N4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.victorsheepman.Dictionary-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dictionary-App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dictionary-App";
+			};
+			name = Release;
+		};
 		84E8D40A2CB6DA790034B375 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -349,6 +465,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		848BC7582CC4272200B3CC01 /* Build configuration list for PBXNativeTarget "Dictionary-AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				848BC7592CC4272200B3CC01 /* Debug */,
+				848BC75A2CC4272200B3CC01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84E8D3F92CB6DA780034B375 /* Build configuration list for PBXProject "Dictionary-App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
