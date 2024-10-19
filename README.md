@@ -18,7 +18,7 @@ La aplicación DictionaryApp está diseñada utilizando SwiftUI y AVKit para pro
 - MVVM
 - AVKit
 
-## Imagenes PokemonApp
+## Imagenes
 
 ![MainView](https://sqrevjfizglmjxxfuvxy.supabase.co/storage/v1/object/sign/Talhua/dictionary/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-10-19%20at%2013.19.17.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJUYWxodWEvZGljdGlvbmFyeS9TaW11bGF0b3IgU2NyZWVuc2hvdCAtIGlQaG9uZSAxNSBQcm8gLSAyMDI0LTEwLTE5IGF0IDEzLjE5LjE3LnBuZyIsImlhdCI6MTcyOTM1OTM0MCwiZXhwIjoxNzYwODk1MzQwfQ.LBcCpBWRunXpEueawFlFOFZvltmtjolRbfdfzKMDm6s&t=2024-10-19T17%3A34%3A55.044Z)
 
