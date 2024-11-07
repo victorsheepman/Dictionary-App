@@ -23,24 +23,16 @@ struct ContentView: View {
     }
 
     var body: some View {
-        ZStack {
-            Color(isDarkMode ? Color("Black-1") : .white)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                header
+        GeometryReader { _ in
+            ZStack {
+                Color(isDarkMode ? Color("Black-1") : .white)
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    header
+                    
+                    textField
                 
-                textField
-            
-                mainWord
-                
-                if viewModel.isNoun {
-                    noun
-                }
-    
-                if viewModel.isVerb {
-                    verb
-                }
-                
+
                 if viewModel.isNoFound {
                     noData
                 }
@@ -64,23 +56,39 @@ struct ContentView: View {
                     }
                 }
                 if let url = viewModel.word?.sourceUrls?.first {
+
                     
-                    Divider()
-                    
-                    VStack(alignment: .leading) {
-                        Text("Source")
-                            .font(.title3)
-                            .foregroundColor(Color("Gray-1"))
-                            .underline()
-                        Link(url, destination: URL(string: url)!)
+                    if viewModel.isNoun {
+                        noun
                     }
+        
+                    if viewModel.isVerb {
+                        verb
+                    }
+                    
+                    if viewModel.isNoFound {
+                        noData
+                    }
+                    if let url = viewModel.word?.sourceUrls?.first {
+                        
+                        Divider()
+                        
+                        VStack(alignment: .leading) {
+                            Text("Source")
+                                .font(.title3)
+                                .foregroundColor(Color("Gray-1"))
+                                .underline()
+                            Link(url, destination: URL(string: url)!)
+                        }
+                    }
+                    
+                    
+                    Spacer()
                 }
-                
-                
-                Spacer()
+                .padding()
             }
-            .padding()
-        }
+        }.ignoresSafeArea(.keyboard, edges: .all)
+    
     }
     
     var header: some View {
@@ -112,6 +120,7 @@ struct ContentView: View {
                     .frame(width: 20, height: 20)
                     .foregroundColor(Color("Purple"))
                 TextField("", text: $viewModel.wordSearched)
+                    .keyboardType(.default)
                     .onSubmit {
                         Task {
                             await viewModel.fetchWord()
