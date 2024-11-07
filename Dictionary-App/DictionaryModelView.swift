@@ -40,12 +40,15 @@ final class DictionaryModelView: ObservableObject {
         return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })) ?? false)
     }
     
+    var isSynonyms: Bool {
+        return word?.meanings?.contains(where: { $0.synonyms?.isEmpty == false }) ?? false
+    }
+
+    
     // Fetch word from the API
     @MainActor
     func fetchWord() async {
-        word = nil
-        isEmpty = false
-        isNoFound = false
+        reset()
         do {
             word = try await getWord().first
                         
@@ -54,7 +57,6 @@ final class DictionaryModelView: ObservableObject {
             word = nil
             print(Constansts.Errors.emptySearch)
         } catch NetworkError.invalidData {
-         
             print(Constansts.Errors.invalidData)
         } catch NetworkError.invalidURL {
             print(Constansts.Errors.invalidURL)
@@ -64,6 +66,12 @@ final class DictionaryModelView: ObservableObject {
         } catch {
             print(Constansts.Errors.unexpected)
         }
+    }
+    
+    private func reset() -> Void {
+        word = nil
+        isEmpty = false
+        isNoFound = false
     }
     
     private func getWord() async throws -> [WordModel] {
@@ -91,7 +99,6 @@ final class DictionaryModelView: ObservableObject {
         }
     }
     
-    // Play audio from a given URL
     func playAudio(url: String) {
         guard let audioPath = URL(string: url) else {
             return

@@ -21,7 +21,6 @@ enum NetworkError: Error {
 enum PartOfSpeech: String {
     case noun = "noun"
     case verb = "verb"
-    
 }
 
 // MARK: - WordModel
