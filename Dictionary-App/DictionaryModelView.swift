@@ -44,9 +44,6 @@ final class DictionaryModelView: ObservableObject {
         return word?.meanings?.contains(where: { $0.synonyms?.isEmpty == false }) ?? false
     }
 
-    
-    // Fetch word from the API
-    @MainActor
     func fetchWord() async {
         reset()
         do {
