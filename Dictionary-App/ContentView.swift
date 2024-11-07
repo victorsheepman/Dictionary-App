@@ -44,6 +44,25 @@ struct ContentView: View {
                 if viewModel.isNoFound {
                     noData
                 }
+                
+                if viewModel.isSynonyms {
+                    if let synonym = viewModel.word?.meanings?.first?.synonyms?.first {
+                        HStack{
+                            Text(Constansts.sections.synonyms)
+                                .font(.subheadline)
+                                .padding(.vertical)
+                                .foregroundColor(Color("Gray-1"))
+                            
+                            Text(synonym)
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundStyle(Color("Purple"))
+                            Spacer()
+                            
+                        }
+
+                    }
+                }
                 if let url = viewModel.word?.sourceUrls?.first {
                     
                     Divider()
@@ -71,9 +90,7 @@ struct ContentView: View {
                 .frame(width: 28, height: 32)
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(Color("Gray-1"))
-            
             Spacer()
-            
             HStack(spacing:12){
                 Toggle(isOn: $isDarkMode){}
                     .toggleStyle(SwitchToggleStyle(tint: Color("Purple")))
@@ -84,10 +101,7 @@ struct ContentView: View {
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(Color(isDarkMode ? Color("Purple") : Color("Gray-1")))
             }
-            
-            
         }
-        
     }
     
     var textField: some View {
@@ -106,10 +120,8 @@ struct ContentView: View {
             }
             .padding()
             .overlay(
-                
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(textFieldBorderColor, lineWidth: 1)
-                
             )
             .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
             .cornerRadius(16)
@@ -124,8 +136,8 @@ struct ContentView: View {
     }
     
     var mainWord: some View {
-        HStack{
-            VStack(alignment:.leading){
+        HStack {
+            VStack(alignment:.leading) {
                 Text(viewModel.word?.word?.uppercased() ?? "")
                     .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -174,34 +186,7 @@ struct ContentView: View {
                 .padding(.vertical)
                 .foregroundColor(Color("Gray-1"))
                 
-            ForEach(viewModel.nouns ?? [], id: \.definition) { definition in
-                if let def = definition.definition {
-                    Label {
-                        Text(def)
-                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                    } icon: {
-                        Image(systemName:Constansts.Icons.circle)
-                            .resizable()
-                            .frame(width: 5, height: 5)
-                            .foregroundColor(Color("Purple"))
-                    }
-                }
-            }
-            if let synonym = viewModel.word?.meanings?.first?.synonyms?.first {
-                HStack{
-                    Text(Constansts.sections.synonyms)
-                        .font(.subheadline)
-                        .padding(.vertical)
-                        .foregroundColor(Color("Gray-1"))
-                    
-                    Text(synonym)
-                        .font(.subheadline)
-                        .bold()
-                        .foregroundStyle(Color("Purple"))
-                    
-                }
-
-            }
+            nounList
         }
     }
     
@@ -223,26 +208,7 @@ struct ContentView: View {
                 .padding(.vertical)
                 .foregroundColor(Color("Gray-1"))
                 
-            ForEach(viewModel.verbs ?? [], id: \.definition) { definition in
-                if let def = definition.definition {
-                    Label {
-                        Text(def)
-                            .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                    } icon: {
-                        Image(systemName: Constansts.Icons.circle)
-                            .resizable()
-                            .frame(width: 5, height: 5)
-                            .foregroundColor(Color("Purple"))
-                    }
-                }
-                
-                if let example = definition.example {
-                    Text(example)
-                        .foregroundStyle(Color("Gray-1"))
-                        .padding([.top, .horizontal])
-                }
-                
-            }
+            verbList
            
         }
     }
@@ -269,6 +235,46 @@ struct ContentView: View {
                 
         }
     }
+    
+    var nounList: some View {
+        ForEach(viewModel.nouns ?? [], id: \.definition) { definition in
+            if let def = definition.definition {
+                Label {
+                    Text(def)
+                        .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                } icon: {
+                    Image(systemName:Constansts.Icons.circle)
+                        .resizable()
+                        .frame(width: 5, height: 5)
+                        .foregroundColor(Color("Purple"))
+                }
+            }
+        }
+    }
+    
+    var verbList: some View {
+        ForEach(viewModel.verbs ?? [], id: \.definition) { definition in
+            if let def = definition.definition {
+                Label {
+                    Text(def)
+                        .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
+                } icon: {
+                    Image(systemName: Constansts.Icons.circle)
+                        .resizable()
+                        .frame(width: 5, height: 5)
+                        .foregroundColor(Color("Purple"))
+                }
+            }
+            
+            if let example = definition.example {
+                Text(example)
+                    .foregroundStyle(Color("Gray-1"))
+                    .padding([.top, .horizontal])
+            }
+            
+        }
+    }
+    
 }
 
 #Preview {

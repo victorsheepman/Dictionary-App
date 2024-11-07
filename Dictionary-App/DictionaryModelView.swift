@@ -40,6 +40,11 @@ final class DictionaryModelView: ObservableObject {
         return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })) ?? false)
     }
     
+    var isSynonyms: Bool {
+        return word?.meanings?.contains(where: { $0.synonyms?.isEmpty == false }) ?? false
+    }
+
+    
     // Fetch word from the API
     @MainActor
     func fetchWord() async {
@@ -65,6 +70,8 @@ final class DictionaryModelView: ObservableObject {
             print(Constansts.Errors.unexpected)
         }
     }
+    
+    
     
     private func getWord() async throws -> [WordModel] {
         guard !wordSearched.isEmpty else {
