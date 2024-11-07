@@ -24,7 +24,7 @@ let mockWordData = WordModel(
             audio: "https://api.dictionaryapi.dev/media/pronunciations/en/keyboard-us.mp3"
         )
     ],
-    origin: nil,  // Este campo no está en el JSON proporcionado, pero puedes añadir un valor si lo necesitas.
+    origin: nil,
     meanings: [
         Meaning(
             partOfSpeech: "noun",
@@ -63,7 +63,8 @@ let mockWordData = WordModel(
             ],
             synonyms: nil
         )
-    ], sourceUrls: [
+    ], 
+    sourceUrls: [
         "https://en.wiktionary.org/wiki/keyboard"
-        ]
+    ]
 )
