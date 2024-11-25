@@ -23,22 +23,17 @@ struct ContentView: View {
     }
 
     var body: some View {
-        GeometryReader { _ in
             ZStack {
-                Color(isDarkMode ? Color("Black-1") : .white)
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    header
-                    
-                    textField
-                    
-                    mainWord
-                    
-                    if viewModel.isNoFound {
-                        noData
-                    }
-                    
-                    if viewModel.isSynonyms {
+                    Color(isDarkMode ? Color("Black-1") : .white)
+                        .edgesIgnoringSafeArea(.all)
+                    VStack {
+                        header
+                        
+                        textField
+                        
+                        mainWord
+                                            
+                        
                         if let synonym = viewModel.word?.meanings?.first?.synonyms?.first {
                             HStack{
                                 Text(Constansts.sections.synonyms)
@@ -53,23 +48,18 @@ struct ContentView: View {
                                 Spacer()
                                 
                             }
-                            
-                        }
-                    }
-                    if let url = viewModel.word?.sourceUrls?.first {
-                        
-                        if viewModel.isNoun {
-                            definitions(Constansts.sections.noun, viewModel.nouns)
                         }
                         
-                        if viewModel.isVerb {
-                            definitions(Constansts.sections.verb, viewModel.verbs)
+                        
+                        if let nouns = viewModel.nouns {
+                            definitions(Constansts.sections.noun, nouns)
+                        }
+                        
+                        if let verbs = viewModel.verbs {
+                            definitions(Constansts.sections.verb, verbs)
                                 .padding(.top)
                         }
                         
-                        if viewModel.isNoFound {
-                            noData
-                        }
                         if let url = viewModel.word?.sourceUrls?.first {
                             
                             Divider()
@@ -82,12 +72,16 @@ struct ContentView: View {
                                 Link(url, destination: URL(string: url)!)
                             }
                         }
+                        
+                        Spacer()
                     }
-                    Spacer()
-                }.padding()
+                    .overlay {
+                        if viewModel.isNoFound {
+                            noData
+                        }
+                    }
+                    .padding()
             }.ignoresSafeArea(.keyboard, edges: .all)
-            
-        }
     }
     
     var header: some View {
@@ -101,8 +95,7 @@ struct ContentView: View {
             Spacer()
             HStack(spacing:12){
                 Toggle(isOn: $isDarkMode){}
-                    .toggleStyle(SwitchToggleStyle(tint: Color("Purple")))
-                    .foregroundColor(.blue)
+                    .toggleStyle(SwitchToggleStyle(tint: .purple))
                 
                 Image(systemName: Constansts.Icons.moon)
                     .resizable()
