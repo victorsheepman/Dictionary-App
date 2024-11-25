@@ -32,6 +32,7 @@ struct ContentView: View {
                     
                     textField
                     
+                    mainWord
                     
                     if viewModel.isNoFound {
                         noData
@@ -57,13 +58,13 @@ struct ContentView: View {
                     }
                     if let url = viewModel.word?.sourceUrls?.first {
                         
-                        
                         if viewModel.isNoun {
-                            noun
+                            definitions(Constansts.sections.noun, viewModel.nouns)
                         }
                         
                         if viewModel.isVerb {
-                            verb
+                            definitions(Constansts.sections.verb, viewModel.verbs)
+                                .padding(.top)
                         }
                         
                         if viewModel.isNoFound {
@@ -151,80 +152,31 @@ struct ContentView: View {
         HStack {
             VStack(alignment:.leading) {
                 Text(viewModel.word?.word?.uppercased() ?? "")
-                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .font(.title)
-                    .bold()
+                    .foregroundStyle(Color(isDarkMode ? .white : .black))
+                    .font(.title.bold())
+                    
                 Text(viewModel.word?.phonetic ?? "")
                     .font(.subheadline)
-                    .foregroundStyle(Color("Purple"))
+                    .foregroundStyle(.purple)
             }
             Spacer()
             if let audio = viewModel.audio {
-                Button(
-                    action: {
-                        
+                Button(action: {
                         viewModel.playAudio(url: audio)
                         
                     }) {
                         Image(systemName: Constansts.Icons.play)
                             .font(.system(size: 24))
-                            .foregroundColor(Color("Purple"))
+                            .foregroundColor(.purple)
                             .padding(20)
-                            .background(Color("Purple").opacity(0.25))
+                            .background(.purple.opacity(0.25))
                             .clipShape(Circle())
-                        
                     }
             }
-            
         }.padding(.top)
     }
     
-    
-    var noun: some View {
-        VStack(alignment:.leading) {
-            HStack{
-                Text(Constansts.sections.noun)
-                    .bold()
-                    .font(.footnote)
-                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                VStack{
-                    Divider()
-                }
-            }
-            
-            Text(Constansts.sections.meaning)
-                .font(.title3)
-                .padding(.vertical)
-                .foregroundColor(Color("Gray-1"))
-                
-            nounList
-        }
-    }
-    
-    var verb: some View {
-        VStack(alignment:.leading) {
-            HStack{
-                Text(Constansts.sections.verb)
-                    .bold()
-                    .font(.footnote)
-                    .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                VStack{
-                    Divider()
-                       
-                }
-            }
-            
-            Text(Constansts.sections.meaning)
-                .font(.title3)
-                .padding(.vertical)
-                .foregroundColor(Color("Gray-1"))
-                
-            verbList
-           
-        }
-    }
-    
+
     var noData: some View {
         VStack{
             Image(systemName: Constansts.Icons.danger)
@@ -248,24 +200,32 @@ struct ContentView: View {
         }
     }
     
-    var nounList: some View {
-        ForEach(viewModel.nouns ?? [], id: \.definition) { definition in
-            if let def = definition.definition {
-                Label {
-                    Text(def)
-                        .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                } icon: {
-                    Image(systemName:Constansts.Icons.circle)
-                        .resizable()
-                        .frame(width: 5, height: 5)
-                        .foregroundColor(Color("Purple"))
+
+    private func definitions(_ title: String, _ definitions: [Definition]?) -> some View {
+        VStack(alignment:.leading) {
+            HStack{
+                Text(title)
+                    .font(.headline.bold().italic())
+                    .foregroundStyle(Color(isDarkMode ? .white : .black))
+                
+                VStack{
+                    Divider()
                 }
             }
+            
+            Text(Constansts.sections.meaning)
+                .font(.callout)
+                .padding(.vertical)
+                .foregroundColor(.gray)
+            
+          listItems(definitions)
+
         }
+        
     }
     
-    var verbList: some View {
-        ForEach(viewModel.verbs ?? [], id: \.definition) { definition in
+    private func listItems(_ definitions:  [Definition]?) -> some View {
+        ForEach(definitions ?? [], id: \.definition) { definition in
             if let def = definition.definition {
                 Label {
                     Text(def)
