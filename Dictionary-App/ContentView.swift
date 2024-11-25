@@ -31,64 +31,62 @@ struct ContentView: View {
                     header
                     
                     textField
-                
-
-                if viewModel.isNoFound {
-                    noData
-                }
-                
-                if viewModel.isSynonyms {
-                    if let synonym = viewModel.word?.meanings?.first?.synonyms?.first {
-                        HStack{
-                            Text(Constansts.sections.synonyms)
-                                .font(.subheadline)
-                                .padding(.vertical)
-                                .foregroundColor(Color("Gray-1"))
-                            
-                            Text(synonym)
-                                .font(.subheadline)
-                                .bold()
-                                .foregroundStyle(Color("Purple"))
-                            Spacer()
-                            
-                        }
-
-                    }
-                }
-                if let url = viewModel.word?.sourceUrls?.first {
-
                     
-                    if viewModel.isNoun {
-                        noun
-                    }
-        
-                    if viewModel.isVerb {
-                        verb
-                    }
                     
                     if viewModel.isNoFound {
                         noData
                     }
-                    if let url = viewModel.word?.sourceUrls?.first {
-                        
-                        Divider()
-                        
-                        VStack(alignment: .leading) {
-                            Text("Source")
-                                .font(.title3)
-                                .foregroundColor(Color("Gray-1"))
-                                .underline()
-                            Link(url, destination: URL(string: url)!)
+                    
+                    if viewModel.isSynonyms {
+                        if let synonym = viewModel.word?.meanings?.first?.synonyms?.first {
+                            HStack{
+                                Text(Constansts.sections.synonyms)
+                                    .font(.subheadline)
+                                    .padding(.vertical)
+                                    .foregroundColor(Color("Gray-1"))
+                                
+                                Text(synonym)
+                                    .font(.subheadline)
+                                    .bold()
+                                    .foregroundStyle(Color("Purple"))
+                                Spacer()
+                                
+                            }
+                            
                         }
                     }
-                    
-                    
+                    if let url = viewModel.word?.sourceUrls?.first {
+                        
+                        
+                        if viewModel.isNoun {
+                            noun
+                        }
+                        
+                        if viewModel.isVerb {
+                            verb
+                        }
+                        
+                        if viewModel.isNoFound {
+                            noData
+                        }
+                        if let url = viewModel.word?.sourceUrls?.first {
+                            
+                            Divider()
+                            
+                            VStack(alignment: .leading) {
+                                Text("Source")
+                                    .font(.title3)
+                                    .foregroundColor(Color("Gray-1"))
+                                    .underline()
+                                Link(url, destination: URL(string: url)!)
+                            }
+                        }
+                    }
                     Spacer()
-                }
-                .padding()
-            }
-        }.ignoresSafeArea(.keyboard, edges: .all)
-    
+                }.padding()
+            }.ignoresSafeArea(.keyboard, edges: .all)
+            
+        }
     }
     
     var header: some View {
@@ -98,16 +96,18 @@ struct ContentView: View {
                 .frame(width: 28, height: 32)
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(Color("Gray-1"))
+            
             Spacer()
             HStack(spacing:12){
                 Toggle(isOn: $isDarkMode){}
                     .toggleStyle(SwitchToggleStyle(tint: Color("Purple")))
                     .foregroundColor(.blue)
+                
                 Image(systemName: Constansts.Icons.moon)
                     .resizable()
                     .frame(width: 19, height: 20)
                     .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Color(isDarkMode ? Color("Purple") : Color("Gray-1")))
+                    .foregroundColor(Color(isDarkMode ? "Purple" : "Gray-1"))
             }
         }
     }
@@ -115,10 +115,12 @@ struct ContentView: View {
     var textField: some View {
         VStack {
             HStack(alignment: .top) {
+                
                 Image(systemName: Constansts.Icons.search)
                     .resizable()
                     .frame(width: 20, height: 20)
-                    .foregroundColor(Color("Purple"))
+                    .foregroundColor(.purple)
+                
                 TextField("", text: $viewModel.wordSearched)
                     .keyboardType(.default)
                     .onSubmit {
@@ -135,6 +137,7 @@ struct ContentView: View {
             .background(isDarkMode ? Color("Black-2") : Color("Gray-3"))
             .cornerRadius(16)
             .padding(.top)
+            
             if viewModel.isEmpty {
                 Text(Constansts.NoData.empty)
                     .foregroundStyle(Color("Orange"))
