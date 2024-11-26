@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8416D4492CBD686A00A96DD0 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8416D4482CBD686A00A96DD0 /* Mock.swift */; };
+		840F084A2CF62D9A004FA4A0 /* DictionaryOO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F08492CF62D9A004FA4A0 /* DictionaryOO.swift */; };
+		840F084C2CF62DFB004FA4A0 /* DictionaryDO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F084B2CF62DFB004FA4A0 /* DictionaryDO.swift */; };
+		840F084F2CF62E63004FA4A0 /* JSONCodingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F084E2CF62E63004FA4A0 /* JSONCodingKey.swift */; };
+		840F08512CF62FED004FA4A0 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F08502CF62FED004FA4A0 /* Enums.swift */; };
+		840F08552CF6303E004FA4A0 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F08542CF6303E004FA4A0 /* DictionaryView.swift */; };
 		848BC7552CC4272200B3CC01 /* Dictionary_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BC7542CC4272200B3CC01 /* Dictionary_AppTests.swift */; };
 		848BC75C2CC427C200B3CC01 /* WordViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BC75B2CC427C200B3CC01 /* WordViewModelTests.swift */; };
 		8495C7FC2CC146C300521800 /* Constansts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8495C7FB2CC146C300521800 /* Constansts.swift */; };
-		84A2956F2CC2A702001FD4FC /* DictionaryModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2956E2CC2A702001FD4FC /* DictionaryModelView.swift */; };
 		84E8D4022CB6DA780034B375 /* Dictionary_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D4012CB6DA780034B375 /* Dictionary_AppApp.swift */; };
 		84E8D4042CB6DA780034B375 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D4032CB6DA780034B375 /* ContentView.swift */; };
 		84E8D4062CB6DA790034B375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8D4052CB6DA790034B375 /* Assets.xcassets */; };
 		84E8D4092CB6DA790034B375 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8D4082CB6DA790034B375 /* Preview Assets.xcassets */; };
-		84E8D4102CB6DE590034B375 /* WordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D40F2CB6DE590034B375 /* WordModel.swift */; };
 		84E8D4122CB6E2700034B375 /* JSONNul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D4112CB6E2700034B375 /* JSONNul.swift */; };
 		84E8D4142CB6E2970034B375 /* JSONAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D4132CB6E2970034B375 /* JSONAny.swift */; };
 /* End PBXBuildFile section */
@@ -32,18 +34,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8416D4482CBD686A00A96DD0 /* Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
+		840F08492CF62D9A004FA4A0 /* DictionaryOO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryOO.swift; sourceTree = "<group>"; };
+		840F084B2CF62DFB004FA4A0 /* DictionaryDO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryDO.swift; sourceTree = "<group>"; };
+		840F084E2CF62E63004FA4A0 /* JSONCodingKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCodingKey.swift; sourceTree = "<group>"; };
+		840F08502CF62FED004FA4A0 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		840F08542CF6303E004FA4A0 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
 		848BC7522CC4272200B3CC01 /* Dictionary-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dictionary-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848BC7542CC4272200B3CC01 /* Dictionary_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary_AppTests.swift; sourceTree = "<group>"; };
 		848BC75B2CC427C200B3CC01 /* WordViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViewModelTests.swift; sourceTree = "<group>"; };
 		8495C7FB2CC146C300521800 /* Constansts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constansts.swift; sourceTree = "<group>"; };
-		84A2956E2CC2A702001FD4FC /* DictionaryModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModelView.swift; sourceTree = "<group>"; };
 		84E8D3FE2CB6DA780034B375 /* Dictionary-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dictionary-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E8D4012CB6DA780034B375 /* Dictionary_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary_AppApp.swift; sourceTree = "<group>"; };
 		84E8D4032CB6DA780034B375 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84E8D4052CB6DA790034B375 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E8D4082CB6DA790034B375 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		84E8D40F2CB6DE590034B375 /* WordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordModel.swift; sourceTree = "<group>"; };
 		84E8D4112CB6E2700034B375 /* JSONNul.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONNul.swift; sourceTree = "<group>"; };
 		84E8D4132CB6E2970034B375 /* JSONAny.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAny.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +70,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840F08482CF62D83004FA4A0 /* Dictionary */ = {
+			isa = PBXGroup;
+			children = (
+				840F08492CF62D9A004FA4A0 /* DictionaryOO.swift */,
+				840F084B2CF62DFB004FA4A0 /* DictionaryDO.swift */,
+				840F08542CF6303E004FA4A0 /* DictionaryView.swift */,
+			);
+			path = Dictionary;
+			sourceTree = "<group>";
+		};
+		840F084D2CF62E4D004FA4A0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8495C7FB2CC146C300521800 /* Constansts.swift */,
+				84E8D4112CB6E2700034B375 /* JSONNul.swift */,
+				84E8D4132CB6E2970034B375 /* JSONAny.swift */,
+				840F084E2CF62E63004FA4A0 /* JSONCodingKey.swift */,
+				840F08502CF62FED004FA4A0 /* Enums.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		848BC7532CC4272200B3CC01 /* Dictionary-AppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,14 +122,10 @@
 		84E8D4002CB6DA780034B375 /* Dictionary-App */ = {
 			isa = PBXGroup;
 			children = (
-				8416D4482CBD686A00A96DD0 /* Mock.swift */,
+				840F084D2CF62E4D004FA4A0 /* Resources */,
+				840F08482CF62D83004FA4A0 /* Dictionary */,
 				84E8D4012CB6DA780034B375 /* Dictionary_AppApp.swift */,
 				84E8D4032CB6DA780034B375 /* ContentView.swift */,
-				84A2956E2CC2A702001FD4FC /* DictionaryModelView.swift */,
-				8495C7FB2CC146C300521800 /* Constansts.swift */,
-				84E8D40F2CB6DE590034B375 /* WordModel.swift */,
-				84E8D4112CB6E2700034B375 /* JSONNul.swift */,
-				84E8D4132CB6E2970034B375 /* JSONAny.swift */,
 				84E8D4052CB6DA790034B375 /* Assets.xcassets */,
 				84E8D4072CB6DA790034B375 /* Preview Content */,
 			);
@@ -230,11 +252,13 @@
 				8495C7FC2CC146C300521800 /* Constansts.swift in Sources */,
 				84E8D4042CB6DA780034B375 /* ContentView.swift in Sources */,
 				84E8D4122CB6E2700034B375 /* JSONNul.swift in Sources */,
-				84E8D4102CB6DE590034B375 /* WordModel.swift in Sources */,
+				840F084A2CF62D9A004FA4A0 /* DictionaryOO.swift in Sources */,
+				840F08552CF6303E004FA4A0 /* DictionaryView.swift in Sources */,
+				840F084F2CF62E63004FA4A0 /* JSONCodingKey.swift in Sources */,
+				840F084C2CF62DFB004FA4A0 /* DictionaryDO.swift in Sources */,
 				84E8D4142CB6E2970034B375 /* JSONAny.swift in Sources */,
 				84E8D4022CB6DA780034B375 /* Dictionary_AppApp.swift in Sources */,
-				84A2956F2CC2A702001FD4FC /* DictionaryModelView.swift in Sources */,
-				8416D4492CBD686A00A96DD0 /* Mock.swift in Sources */,
+				840F08512CF62FED004FA4A0 /* Enums.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
