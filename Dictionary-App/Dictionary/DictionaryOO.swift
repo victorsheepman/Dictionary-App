@@ -1,8 +1,8 @@
 //
-//  DictionaryModelView.swift
+//  DictionaryOO.swift
 //  Dictionary-App
 //
-//  Created by Victor Marquez on 18/10/24.
+//  Created by Victor Marquez on 26/11/24.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ final class DictionaryOO: ObservableObject {
     private var player: AVPlayer?
     
     var audio: String? {
-        return word?.phonetics?.first { audio in
+        word?.phonetics?.first { audio in
             guard let audioValue = audio.audio else { return false }
             return !audioValue.isEmpty
         }?.audio
