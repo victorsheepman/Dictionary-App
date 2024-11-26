@@ -27,6 +27,7 @@ struct ContentView: View {
                     Color(isDarkMode ? Color("Black-1") : .white)
                         .edgesIgnoringSafeArea(.all)
                     VStack {
+                        
                         header
                         
                         textField
@@ -115,7 +116,7 @@ struct ContentView: View {
                     .frame(width: 20, height: 20)
                     .foregroundColor(.purple)
                 
-                TextField("", text: $viewModel.wordSearched)
+                TextField("Enter a word...", text: $viewModel.wordSearched)
                     .keyboardType(.default)
                     .onSubmit {
                         Task {
@@ -155,8 +156,9 @@ struct ContentView: View {
             Spacer()
             if let audio = viewModel.audio {
                 Button(action: {
-                        viewModel.playAudio(url: audio)
-                        
+                    withAnimation(.spring()) {
+                            viewModel.playAudio(url: audio)
+                        }
                     }) {
                         Image(systemName: Constansts.Icons.play)
                             .font(.system(size: 24))
@@ -169,7 +171,6 @@ struct ContentView: View {
         }.padding(.top)
     }
     
-
     var noData: some View {
         VStack(spacing: 20) {
             Image(systemName: Constansts.Icons.danger)
