@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-final class DictionaryModelView: ObservableObject {
+final class DictionaryOO: ObservableObject {
     
     @Published var word: Word?
     @Published var wordSearched: String = ""

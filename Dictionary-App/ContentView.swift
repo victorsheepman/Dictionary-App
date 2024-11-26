@@ -12,7 +12,7 @@ import AVKit
 struct ContentView: View {
 
     @State private var isDarkMode: Bool = false
-    @StateObject private var viewModel = DictionaryModelView()
+    @StateObject private var viewModel = DictionaryOO()
     
     private var textFieldBorderColor: Color {
         if viewModel.isEmpty {
