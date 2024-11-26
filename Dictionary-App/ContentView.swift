@@ -15,7 +15,7 @@ struct ContentView: View {
     @StateObject private var viewModel = DictionaryOO()
     
     private var textFieldBorderColor: Color {
-        if viewModel.isEmpty {
+        if viewModel.isTextfieldEmpty {
             return Color("Orange")
         } else {
             return isDarkMode ? Color("Black-2") : Color("Gray-3")
@@ -77,7 +77,7 @@ struct ContentView: View {
                         Spacer()
                     }
                     .overlay {
-                        if viewModel.isNoFound {
+                        if viewModel.isWordNoFound {
                             noData
                         }
                     }
@@ -133,7 +133,7 @@ struct ContentView: View {
             .cornerRadius(16)
             .padding(.top)
             
-            if viewModel.isEmpty {
+            if viewModel.isTextfieldEmpty {
                 Text(Constansts.NoData.empty)
                     .foregroundStyle(Color("Orange"))
                     .multilineTextAlignment(.leading)

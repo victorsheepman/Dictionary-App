@@ -8,13 +8,14 @@
 import Foundation
 import AVFoundation
 
+
 final class DictionaryOO: ObservableObject {
     
     @Published var word: Word?
     @Published var wordSearched: String = ""
-    @Published var isEmpty: Bool = false
-    @Published var isNoFound: Bool = false
-    
+    @Published var isTextfieldEmpty: Bool = false
+    @Published var isWordNoFound: Bool = false
+   
     private var player: AVPlayer?
     
     var audio: String? {
@@ -25,32 +26,36 @@ final class DictionaryOO: ObservableObject {
     }
     
     var nouns: [Definition]? {
-        return word?.meanings?.first(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })?.definitions?.prefix(3).map { $0 }
+        word?.meanings?.first(where: {
+            $0.partOfSpeech == PartOfSpeech.noun.rawValue
+        })?
+        .definitions?.prefix(3).map { $0 }
     }
     
     var verbs: [Definition]? {
-        return word?.meanings?.first(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })?.definitions?.prefix(3).map { $0 }
+        word?.meanings?.first(where: {
+            $0.partOfSpeech == PartOfSpeech.verb.rawValue
+        })?
+        .definitions?.prefix(3).map { $0 }
     }
     
-    var isNoun: Bool {
-        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.noun.rawValue })) ?? false)
-    }
     
-    var isVerb: Bool {
-        return ((word?.meanings?.contains(where: { $0.partOfSpeech == PartOfSpeech.verb.rawValue })) ?? false)
-    }
-    
-    var isSynonyms: Bool {
-        return word?.meanings?.contains(where: { $0.synonyms?.isEmpty == false }) ?? false
+    func playAudio(url: String) {
+        guard let audioPath = URL(string: url) else {
+            return
+        }
+        
+        player = AVPlayer(url: audioPath)
+        player?.play()
     }
 
     func fetchWord() async {
         reset()
         do {
-            word = try await getWord().first
+            word = try await fetchWordData().first
                         
         } catch NetworkError.emptySearch {
-            isEmpty = true
+            isTextfieldEmpty = true
             word = nil
             print(Constansts.Errors.emptySearch)
         } catch NetworkError.invalidData {
@@ -59,19 +64,13 @@ final class DictionaryOO: ObservableObject {
             print(Constansts.Errors.invalidURL)
         } catch NetworkError.invalidResponse {
             print(Constansts.Errors.invalidResponse)
-            isNoFound = true
+            isWordNoFound = true
         } catch {
             print(Constansts.Errors.unexpected)
         }
     }
-    
-    private func reset() -> Void {
-        word = nil
-        isEmpty = false
-        isNoFound = false
-    }
-    
-    private func getWord() async throws -> [WordModel] {
+        
+    private func fetchWordData() async throws -> [WordModel] {
         guard !wordSearched.isEmpty else {
             throw NetworkError.emptySearch
         }
@@ -96,12 +95,9 @@ final class DictionaryOO: ObservableObject {
         }
     }
     
-    func playAudio(url: String) {
-        guard let audioPath = URL(string: url) else {
-            return
-        }
-        
-        player = AVPlayer(url: audioPath)
-        player?.play()
+    private func reset() -> Void {
+        word = nil
+        isTextfieldEmpty = false
+        isWordNoFound = false
     }
 }
