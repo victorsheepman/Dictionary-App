@@ -11,7 +11,7 @@ import AVFoundation
 
 final class DictionaryOO: ObservableObject {
     
-    @Published var word: Word?
+    @Published var word: DictionaryDO?
     @Published var wordSearched: String = ""
     @Published var isTextfieldEmpty: Bool = false
     @Published var isWordNoFound: Bool = false
@@ -70,7 +70,7 @@ final class DictionaryOO: ObservableObject {
         }
     }
         
-    private func fetchWordData() async throws -> [WordModel] {
+    private func fetchWordData() async throws -> [DictionaryDO] {
         guard !wordSearched.isEmpty else {
             throw NetworkError.emptySearch
         }
@@ -89,7 +89,7 @@ final class DictionaryOO: ObservableObject {
         
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode([WordModel].self, from: data)
+            return try decoder.decode([DictionaryDO].self, from: data)
         } catch {
             throw NetworkError.invalidData
         }
