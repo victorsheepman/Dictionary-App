@@ -171,25 +171,22 @@ struct ContentView: View {
     
 
     var noData: some View {
-        VStack{
+        VStack(spacing: 20) {
             Image(systemName: Constansts.Icons.danger)
                 .resizable()
                 .frame(width: 64, height: 64)
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(Color(isDarkMode ? Color("Purple") : Color("Gray-1")))
+            
             Text(Constansts.NoData.title)
-                .foregroundStyle(Color(isDarkMode ? .white : Color("Black-3")))
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                .font(.system(size: 20))
-                .padding(.top)
+                .foregroundStyle(isDarkMode ? .white : .black)
+                .font(.title3.bold())
+                
             
             Text(Constansts.NoData.body)
                 .font(.subheadline)
-                .foregroundColor(Color(isDarkMode ? Color("Purple") : Color("Gray-1")))
+                .foregroundColor(isDarkMode ? .purple : Color("Gray-1"))
                 .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .padding(.top)
-                
         }
     }
     
@@ -239,7 +236,6 @@ struct ContentView: View {
             
         }
     }
-    
 }
 
 #Preview {
